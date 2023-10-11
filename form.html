@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <form id="customerForm">
+        <h1>Customer Details</h1>
+        <label for="firstName">First Name*</label>
+        <input type="text" id="firstName"><br><br>
+
+        <label for="lastName">Last Name*</label>
+        <input type="text" id="lastName"><br><br>
+
+        <label for="middleName">Middle Name</label>
+        <input type="text" id="middleName"><br><br>
+
+        <label for="identityProof">Identity Proof</label>
+        <select id="identityProof">
+            <option value="Passport">Passport</option>
+            <option value="Aadhar">Aadhar</option>
+            <option value="DrivingLicense">Driving License</option>
+        </select><br><br>
+
+        <label for="proofValue">Value of Identity Proof</label>
+        <input type="text" id="proofValue"><br><br>
+
+        <button type="button" id="nextButton1" onclick="validateCustomerDetails()"">NEXT</button>
+    </form>
+
+    <script>
+
+        function showAddressInfo(){
+            // console.log("hello")
+            window.location.href= 'address.html'
+        }
+
+        function validateCustomerDetails() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+
+            if (firstName.trim() === ''  || lastName.trim() === '' || firstName.length > 3  || lastName.length > 3) {
+                alert('Error');
+                return;
+            }
+
+            const identityProof= document.getElementById("identityProof").value
+            const proofValue= document.getElementById("proofValue").value
+
+             
+            if(!validateIdentityProof(identityProof,proofValue)){
+                alert('Invalid Identity proof and value')
+                return;
+            }
+
+            showAddressInfo()
+                
+        }
+
+        function validateIdentityProof(identityProof,proofValue){
+            switch(identityProof){
+                    case "Passport": return validatePassport(proofValue)
+                    case "Aadhar": return validateAadhar(proofValue)
+                    case "DrivingLicense": return validateDrivingLicense(proofValue)
+                    default: return false
+                }
+            }
+
+            function validatePassport(value){
+                return /^[A-Za-z]{1}[0-9]{7}$/.test(value);
+            }
+
+            function validateAadhar(value){
+                return /^[0-9]{12}$/.test(value);
+            }
+
+            function validateDrivingLicense(value){
+                return /^[A-Za-z]{2}[0-9]{13}$/.test(value);
+            }
+    </script>
+ 
+</body>
+</html>
